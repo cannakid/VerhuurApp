@@ -30,30 +30,43 @@ export default function TabLayout() {
       <Tabs.Screen
         name="index"
         options={{
-          title: 'Sign Out',
+          title: 'Catalogus',
           tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
-          headerRight: () => (
-            <Link href="/modal" asChild>
-              <Pressable>
-                {({ pressed }) => (
-                  <FontAwesome
-                    name="info-circle"
-                    size={25}
-                    color={Colors[colorScheme ?? 'light'].text}
-                    style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }}
-                  />
-                )}
-              </Pressable>
-            </Link>
-          ),
+          
         }}
       />
       <Tabs.Screen
         name="two"
         options={{
-          title: 'Catalogus',
+          title: 'Mijn aanbiedingen',
           tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
-          headerRight: () => (
+        }}
+      />
+      <Tabs.Screen
+        name="three"
+        options={{
+          title: 'Profiel',
+          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+        }}
+      />
+      <Tabs.Screen
+        name="addAppliance"
+        options={{
+        href: null
+      }}
+      />
+      <Tabs.Screen
+        name="updateAppliance"
+        options={{
+        href: null
+      }}
+  />
+    </Tabs>
+  );
+}
+
+/*
+headerRight: () => (
             <Link href="/modal" asChild>
               <Pressable>
                 {({ pressed }) => (
@@ -67,8 +80,4 @@ export default function TabLayout() {
               </Pressable>
             </Link>
           ),
-        }}
-      />
-    </Tabs>
-  );
-}
+*/

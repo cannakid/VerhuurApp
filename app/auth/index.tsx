@@ -1,9 +1,10 @@
 import { Text, TextInput, View, StyleSheet, TouchableOpacity, Dimensions} from "react-native";
 import Constants from "expo-constants";
 import { useState } from "react";
-import { auth } from "../FirebaseConfig";
+import { auth } from "../../FirebaseConfig";
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 import { router } from "expo-router";
+import { navigate } from "expo-router/build/global-state/routing";
 
 export default function Index() {
   const [email, setEmail] = useState("");
@@ -12,21 +13,14 @@ export default function Index() {
 
   const signIn = async () => {
     try {
-      const user = await signInWithEmailAndPassword(auth, email, password)
+      await signInWithEmailAndPassword(auth, email, password)
     } catch (error: any) {
       console.log(error)
       alert('Sign in failed: ' + error.message);
     }
   }
 
-  const signUp = async () => {
-    try {
-      const user = await createUserWithEmailAndPassword(auth, email, password)
-    } catch (error: any) {
-      console.log(error)
-      alert('Sign in failed: ' + error.message);
-    }
-  }
+
 
   return (
     <View style={styles.container}>
@@ -41,73 +35,13 @@ export default function Index() {
           <Text style={styles.boxText}>Log in</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.button} onPress={signUp}>
-          <Text style={styles.boxText}>Make Account</Text>
+        <TouchableOpacity style={styles.button} onPress={() => navigate("/auth/register")}>
+          <Text style={styles.boxText}>Maak account</Text>
         </TouchableOpacity>
       </View>
       
     </View>
   )
-
-
-  /*
-  const [username, setUsername] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
-  
-  
-  
-  const submit = () => {
-    console.log(username);
-    console.log(password);
-    setUsername("");
-    setPassword("");
-  }
-
-  return (
-    <View
-      style={{
-          height: 720,
-        }}
-    >
-      <View style={styles.titleContainer}>
-      <Text
-          style={styles.title}
-        >De verhuurders</Text>
-        </View>
-      <View
-        style={{
-          flex: 1,
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-       
-        <Text style={styles.text}>Login or register</Text>
-        <TextInput 
-          placeholder="username"
-          keyboardType="default"
-          style={styles.textinput}
-          value={username}
-          onChangeText={(text) => setUsername(text)}
-          ></TextInput>
-        
-        <TextInput 
-          secureTextEntry={true}
-          placeholder="password"
-          keyboardType="default"
-          style={styles.textinput}
-          value={password}
-          onChangeText={(text) => setPassword(text)}
-          ></TextInput>
-          <Pressable
-        onPress={submit}
-        style={styles.submit}
-        ><Text style={styles.boxText}>Submit</Text></Pressable>
-        <Search></Search>
-      </View>
-    </View>
-  );
-  */
 }
 
 
@@ -155,10 +89,5 @@ const styles = StyleSheet.create({
       padding: 5,
     },
 });
-
-/*
-      borderColor: "red",
-      borderWidth: 1,
-*/
 
 

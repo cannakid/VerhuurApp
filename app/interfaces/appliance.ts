@@ -1,5 +1,7 @@
 export default interface Appliance {
-    id : number;
+    id: string;
+    userId : string;
+    ownerName: string
     description: string;
     category: string;
     url: string;

@@ -4,55 +4,38 @@ import { db } from '../../FirebaseConfig';
 import { collection, addDoc, getDocs, updateDoc, deleteDoc, doc, query, where } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
 import Constants from 'expo-constants';
+import Appliance from '../interfaces/appliance';
 import { navigate } from 'expo-router/build/global-state/routing';
 
 export default function TabTwoScreen() {
-  const [todos, setTodos] = useState<any>([]);
+  const [appliance, setAppliance] = useState<Appliance>();
   const auth = getAuth();
   const user = auth.currentUser;
-  const applianceCollection = collection(db, 'applina');
+  const applianceCollection = collection(db, 'appliances');
 
-  useEffect(() => {
-    fetchTodos();
-  }, [user]);
 
-  const fetchTodos = async () => {
-    if (user) {
-      const q = query(applianceCollection, where("userId", "==", user.uid));
-      const data = await getDocs(q);
-      setTodos(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
-    } else {
-      console.log("No user logged in");
-    }
-  };
 
-  const deleteTodo = async (id: string) => {
+
+  const updateTodo = async (id: string, completed: any) => {
     const todoDoc = doc(db, 'todos', id);
-    await deleteDoc(todoDoc);
-    fetchTodos();
+    await updateDoc(todoDoc, { completed: !completed });
   };
+
 
   return (
     <View style={styles.main}>
       <View style={styles.container}>
         <Text style={styles.title}>Todo List</Text>
         <View style={styles.inputContainer}>
-          <TouchableOpacity style={styles.button} onPress={() => navigate("/(tabs)/addAppliance")}>
+          <TextInput
+            placeholder="New Task"
+            value={appliance?.description}
+            style={styles.textinput}
+          />
+          <TouchableOpacity style={styles.button} onPress={() => updateTodo("", false)}>
             <Text style={styles.boxText}>Add</Text>
           </TouchableOpacity>
         </View>
-        <FlatList
-          data={todos}
-          renderItem={({ item }) => (
-            <View style={styles.todoContainer}>
-              <Text style={{ flex: 1, color: "white" }}>{item.task}</Text>
-              <TouchableOpacity style={styles.button} onPress={() => deleteTodo(item.id)}>
-                <Text style={styles.boxText}>Delete</Text>
-              </TouchableOpacity>
-            </View>
-          )}
-          keyExtractor={(item) => item.id}
-        />
       </View>
     </View>
   );
