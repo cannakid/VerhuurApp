@@ -1,20 +1,18 @@
 import { StyleSheet, TouchableOpacity, Text, View } from 'react-native';
 import { auth } from '../../FirebaseConfig';
 import { router } from 'expo-router';
-import { getAuth } from 'firebase/auth';
+import { onAuthStateChanged } from 'firebase/auth';
 import Constants from 'expo-constants';
+import { useEffect } from 'react';
 
 
 export default function TabOneScreen() {
-
-  getAuth().onAuthStateChanged((user) => {
-    if (!user) router.replace("/");
-  });
+  
 
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Sign Out</Text>
-      <TouchableOpacity style={styles.button} onPress={() => auth.signOut()}>
+      <TouchableOpacity style={styles.button} onPress={async () => await auth.signOut()}>
         <Text style={styles.text}>Sign Out</Text>
       </TouchableOpacity>
     </View>

@@ -1,21 +1,18 @@
-import { Text, TextInput, View, StyleSheet, Pressable, TouchableOpacity} from "react-native";
+import { Text, TextInput, View, StyleSheet, TouchableOpacity, Dimensions} from "react-native";
 import Constants from "expo-constants";
 import { useState } from "react";
-import Search from "./app/search";
 import { auth } from "../FirebaseConfig";
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 import { router } from "expo-router";
-import Appliance from "./interfaces/appliance";
 
 export default function Index() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
 
   const signIn = async () => {
     try {
       const user = await signInWithEmailAndPassword(auth, email, password)
-      if (user) router.replace('/(tabs)');
     } catch (error: any) {
       console.log(error)
       alert('Sign in failed: ' + error.message);
@@ -25,7 +22,6 @@ export default function Index() {
   const signUp = async () => {
     try {
       const user = await createUserWithEmailAndPassword(auth, email, password)
-      if (user) router.replace('/(tabs)');
     } catch (error: any) {
       console.log(error)
       alert('Sign in failed: ' + error.message);
@@ -34,15 +30,22 @@ export default function Index() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Login</Text>
-      <TextInput style={styles.textinput} placeholder="email" value={email} onChangeText={setEmail} />
-      <TextInput style={styles.textinput} placeholder="password" value={password} onChangeText={setPassword} secureTextEntry/>
-      <TouchableOpacity style={styles.button} onPress={signIn}>
-        <Text style={styles.boxText}>Login</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.button} onPress={signUp}>
-        <Text style={styles.boxText}>Make Account</Text>
-      </TouchableOpacity>
+      <View style={styles.titleContainer}>
+        <Text style={styles.title}>De Verhuurders</Text>
+      </View>
+      <View style={styles.loginContainer}>
+        <TextInput style={styles.textinput} placeholder="email" value={email} onChangeText={setEmail} />
+        <TextInput style={styles.textinput} placeholder="wachtwoord" value={password} onChangeText={setPassword} secureTextEntry/>
+
+        <TouchableOpacity style={styles.button} onPress={signIn}>
+          <Text style={styles.boxText}>Log in</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity style={styles.button} onPress={signUp}>
+          <Text style={styles.boxText}>Make Account</Text>
+        </TouchableOpacity>
+      </View>
+      
     </View>
   )
 
@@ -109,46 +112,48 @@ export default function Index() {
 
 
 const styles = StyleSheet.create({
-    title: {
-      fontSize: 30,
-      fontWeight: "bold",
-      top: 10,
-      color: "white",
-      marginBottom: 30
+    container: { 
+      paddingTop: Constants.statusBarHeight,
+      backgroundColor: "#2b2b2d",
+      height: Dimensions.get("window").height, // may need to use events for reactivity
     },
     titleContainer: {
-      flex: 1,
       alignItems: "center",
-      
+      marginTop: 30,
+      marginBottom: 30
     },
-    container: { 
-      paddingTop: Constants.statusBarHeight
+    title: {
+      fontSize: 40,
+      fontWeight: "bold",
+      color: "white",
+    },
+    loginContainer: {
+      alignItems: "center",
+      marginBottom: 30,
     },
     textinput: { 
-      borderColor: "red", 
+      borderColor: "gray", 
       borderWidth: 1, 
-      width: 200, 
+      width: 300, 
       color: "black", 
+      margin: 5,
       backgroundColor: "white", 
       borderRadius: 20, 
-    },
-    text: {
-      color: "white"
     },
     boxText: {
       color: "black"
     },
     button: {
       borderColor: "grey",
-      flex: 0,
       alignItems: "center",
+      width: 300,
       borderWidth: 1, 
       color: "black", 
       backgroundColor: "white", 
       borderRadius: 20, 
-      marginBottom: 10,
+      margin: 5,
       padding: 5,
-    }
+    },
 });
 
 /*
