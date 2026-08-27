@@ -1,8 +1,8 @@
-import React from 'react';
-import FontAwesome from '@expo/vector-icons/FontAwesome';
-import { Link, Tabs } from 'expo-router';
-import { Pressable, useColorScheme } from 'react-native';
-import { Colors } from '@/app-example/constants/theme';
+import React from "react";
+import FontAwesome from "@expo/vector-icons/FontAwesome";
+import { Link, Tabs } from "expo-router";
+import { Pressable, useColorScheme } from "react-native";
+import { Colors } from "@/app-example/constants/theme";
 /*
 import Colors from '@/constants/Colors';
 import { useColorScheme } from '@/components/useColorScheme';
@@ -10,7 +10,7 @@ import { useColorScheme } from '@/components/useColorScheme';
 
 // You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
 function TabBarIcon(props: {
-  name: React.ComponentProps<typeof FontAwesome>['name'];
+  name: React.ComponentProps<typeof FontAwesome>["name"];
   color: string;
 }) {
   return <FontAwesome size={28} style={{ marginBottom: -3 }} {...props} />;
@@ -22,45 +22,47 @@ export default function TabLayout() {
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
+        tabBarActiveTintColor: Colors[colorScheme ?? "light"].tint,
         // Disable the static render of the header on web
         // to prevent a hydration error in React Navigation v6.
         headerShown: false,
-      }}>
+      }}
+    >
       <Tabs.Screen
         name="index"
         options={{
-          title: 'Catalogus',
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
-          
+          title: "Catalogus",
+          tabBarIcon: ({ color }) => <TabBarIcon name="search" color={color} />,
         }}
       />
       <Tabs.Screen
-        name="two"
+        name="userOffers"
         options={{
-          title: 'Mijn aanbiedingen',
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          title: "Mijn aanbiedingen",
+          tabBarIcon: ({ color }) => (
+            <TabBarIcon name="clipboard" color={color} />
+          ),
         }}
       />
       <Tabs.Screen
-        name="three"
+        name="profile"
         options={{
-          title: 'Profiel',
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          title: "Profiel",
+          tabBarIcon: ({ color }) => <TabBarIcon name="user" color={color} />,
         }}
       />
       <Tabs.Screen
         name="addAppliance"
         options={{
-        href: null
-      }}
+          href: null,
+        }}
       />
       <Tabs.Screen
         name="updateAppliance"
         options={{
-        href: null
-      }}
-  />
+          href: null,
+        }}
+      />
     </Tabs>
   );
 }

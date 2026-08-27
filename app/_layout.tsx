@@ -1,5 +1,9 @@
 import { auth } from "@/FirebaseConfig";
-import { DarkTheme, DefaultTheme, ThemeProvider } from "@react-navigation/native";
+import {
+  DarkTheme,
+  DefaultTheme,
+  ThemeProvider,
+} from "@react-navigation/native";
 import { Stack } from "expo-router";
 import { onAuthStateChanged, User } from "firebase/auth";
 import { useEffect, useState } from "react";
@@ -26,16 +30,20 @@ export default function RootLayout() {
   }
 
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-        <Stack>
-          <Stack.Protected guard={!user}>
-            <Stack.Screen name="auth" options={{ headerShown: false }} />
-          </Stack.Protected>
-          <Stack.Protected guard={!!user}>
-            <Stack.Screen name="(tabs)" options={{ headerShown: false }}  />
-          </Stack.Protected>
-        </Stack>
-        <StatusBar/>
-      </ThemeProvider>
+    <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
+      <Stack>
+        <Stack.Protected guard={!user}>
+          <Stack.Screen name="auth" options={{ headerShown: false }} />
+        </Stack.Protected>
+        <Stack.Protected guard={!!user}>
+          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+          <Stack.Screen
+            name="appliance/[id]"
+            options={{ headerShown: false, title: "Toestel" }}
+          />
+        </Stack.Protected>
+      </Stack>
+      <StatusBar />
+    </ThemeProvider>
   );
 }
