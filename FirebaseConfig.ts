@@ -9,12 +9,12 @@ import { getStorage } from "firebase/storage"
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyBIiIdYmbzcmqsfRxvU3jO2nV9JYQdTSe8",
-  authDomain: "verhuurapp-5b652.firebaseapp.com",
-  projectId: "verhuurapp-5b652",
-  storageBucket: "verhuurapp-5b652.firebasestorage.app",
-  messagingSenderId: "208905142234",
-  appId: "1:208905142234:web:8be4c653b0faba973d0ae3"
+  apiKey: "",
+  authDomain: "",
+  projectId: "",
+  storageBucket: "",
+  messagingSenderId: "",
+  appId: ""
 };
 
 // Initialize Firebase
